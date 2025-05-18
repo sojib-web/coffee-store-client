@@ -3,6 +3,10 @@ import MainLayout from "../Layout/MainLayout";
 import Home from "../Components/Home/Home";
 import AddCoffee from "../Components/AddCoffee/AddCoffee";
 import UpdateCoffee from "../Components/UpdateCoffee/UpdateCoffee";
+import CoffeeDetails from "../Components/CoffeeDetails";
+import SignIn from "../Components/SignIn/SignIn";
+import SignUp from "../Components/SignUp/SignUp";
+import User from "../Components/User/User";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,8 +22,27 @@ const router = createBrowserRouter([
         Component: AddCoffee,
       },
       {
-        path: "updateCoffee",
+        path: "coffeeDetails/:id",
+        Component: CoffeeDetails,
+      },
+      {
+        path: "updateCoffee/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/coffees/${params.id}`),
         Component: UpdateCoffee,
+      },
+      {
+        path: "signin",
+        Component: SignIn,
+      },
+      {
+        path: "signup",
+        Component: SignUp,
+      },
+      {
+        path: "user",
+        loader: () => fetch(`http://localhost:3000/users`),
+        Component: User,
       },
     ],
   },

@@ -1,8 +1,9 @@
 import React from "react";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
   const { _id, name, chef, price, photo } = coffee;
 
   const handleDelete = (_id) => {
@@ -29,6 +30,10 @@ const CoffeeCard = ({ coffee }) => {
                 text: "Your coffee has been deleted.",
                 icon: "success",
               });
+
+              //  remove the coffee
+              const remainingCoffees = coffees.filter((cof) => cof._id !== _id);
+              setCoffees(remainingCoffees);
             }
           });
       }
@@ -62,12 +67,16 @@ const CoffeeCard = ({ coffee }) => {
 
       {/* Action Buttons */}
       <div className="flex flex-col gap-2">
-        <button className="bg-[#D2B48C] p-2 rounded">
-          <Eye className="text-white w-5 h-5" />
-        </button>
-        <button className="bg-[#3C393B] p-2 rounded">
-          <Pencil className="text-white w-5 h-5" />
-        </button>
+        <Link to={`/coffeeDetails/${_id}`}>
+          <button className="bg-[#D2B48C] p-2 rounded cursor-pointer">
+            <Eye className="text-white w-5 h-5" />
+          </button>
+        </Link>
+        <Link to={`/updateCoffee/${_id}`}>
+          <button className="bg-[#3C393B] p-2 rounded cursor-pointer">
+            <Pencil className="text-white w-5 h-5" />
+          </button>
+        </Link>
         <button
           onClick={() => handleDelete(_id)}
           className="bg-[#EA4744] p-2 rounded cursor-pointer"
